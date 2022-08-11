@@ -4,7 +4,13 @@
 
 ## Project Description
 
+In this project we will be building a responsive website that allows you to search a mood at a current time and produces the most relevant and current memes available on the internet.
+
 ## User Story
+```
+As a user, I ...
+
+```
 
 ## Wireframes
 
