@@ -8,16 +8,18 @@ In this project we will be building a responsive website that allows you to sear
 
 ## User Story
 ```
+As A mEmE lOrD I nEeD tO sOrT mEmEs By My MoOd
+
 As a user, I ...
 
 ```
 
 ## Wireframes
 
-###Desktop
+### Desktop
 
 ![image](https://user-images.githubusercontent.com/30813052/184045597-75f7be47-8d2e-4874-a3bc-c67f0aaba89c.png)
 
-###Mobile
+### Mobile
 
 ![image](https://user-images.githubusercontent.com/30813052/184045610-86492e09-7763-4cd1-9509-2605eda2883c.png)
