@@ -47,12 +47,12 @@ function getPerformerId(artist) {
                 if(hasEvents == false) { //checks if the artist has upcoming shows
                     console.log('No events');
                     $('#event-title').text('No upcoming events');
-                    $('artist').text(perfData.performers[0].name)
+                    $('#artist').text(perfData.performers[0].name)
                     var imgSrc = perfData.performers[0].image;
                     $('#artist-img').attr('src', imgSrc);
                     return;
                 } else {
-                    $('artist').text(perfData.performers[0].name);
+                    $('#artist').text(perfData.performers[0].name);
                     getEventInfo(perfID);
                 }
         })
@@ -97,7 +97,6 @@ function getEventInfo(ID) {
             var lon = eventData.events[0].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
 })
 }
-
 
 
 //---------------------------------------------------------------------------------------------------------------------
