@@ -1,22 +1,101 @@
 <!DOCTYPE html>
 <html>
     <Head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Concerteer</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="assets/script.js"></script>
     </Head>
 
-    <body>
-        <h1 class="text-3xl font-bold underline">
-            Concerteer
-          </h1>
-        <p>
-            This is placeholder
-        </p>
+    <body class="bg-indigo-50">
+    <!--Nav Bar-->
+        <nav class="flex items-center justify-between flex-wrap bg-indigo-900 p-6">
+            <div class="flex items-center flex-shrink-0 text-indigo-50 mr-6">
+              <span class="font-semibold text-xl tracking-tight">concerteer</span>
+            </div>
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+                <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">
+                    saved search
+                </a>
+            </div>
+          </nav>
+    <!--Search Bar-->
+        
+        <div class="px-6 py-6">
+            <form class="flex items-center">   
+                <label for="simple-search" class="sr-only">Search</label>
+                <div class="relative w-full">
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-indigo-500 dark:text-indigo-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <input type="text" id="simple-search" class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 p-2.5  dark:bg-indigo-700 dark:border-indigo-600 dark:placeholder-indigo-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Search" required="">
+                </div>
+                <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-indigo-50 bg-indigo-700 rounded-lg border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <span class="sr-only">Search</span>
+                </button>
+            </form>
+        </div>
+
+
+    <!--Table-->        
+        <div class="overflow-x-auto relative px-6 py-2">
+            <h1 class="text-1xl font-indigo-900 font-bold py-2">Up Coming Shows</h1>
+            <table class="w-full text-sm text-left text-indigo-500 dark:text-indigo-400 rounded-lg">
+                <thead class="text-xs text-indigo-700 uppercase bg-indigo-50 dark:bg-indigo-700 dark:text-indigo-200">
+                    <tr>
+                        <th scope="col" class="py-3 px-6">
+                            Show
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Location
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Date & Time
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Price
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b dark:bg-indigo-100 dark:border-indigo-700">
+                        <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
+                            After Hour: The Weeknd
+                        </th>
+                        <td class="py-4 px-6 text-indigo-900">
+                            Atlanta (ATL)
+                        </td>
+                        <td class="py-4 px-6 text-indigo-900">
+                            September 1st, 2022
+                        </td>
+                        <td class="py-4 px-6 text-indigo-900">
+                            from $2999
+                        </td>
+                        <td class="py-4 px-6">
+                            <a href="#" class="font-medium text-indigo-600 dark:text-indigo-500 hover:underline">Accommodations</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </body>
 
-    <footer>
-        <p>
-            Made by Scott's Tots
-        </p>
+    <footer class="p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-indigo-800">
+        <span class="text-sm text-indigo-500 sm:text-center dark:text-indigo-400">© 2022 <a href="https://flowbite.com/" class="hover:underline">Scott'sTots™</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm text-indigo-500 dark:text-indigo-400 sm:mt-0">
+            <li>
+                <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+            </li>
+            <li>
+                <a href="#" class="hover:underline">Contact</a>
+            </li>
+        </ul>
     </footer>
 </html>
