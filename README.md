@@ -9,18 +9,35 @@ In this project we will be building a responsive website that allows you to sear
 
 ## User Story
 ```
-As a user, I ...
+As a music lover I am searching for my favorite artists upcoming shows. 
+I then want to see a song profile and see hotels in the city where the event is held.
+- A PERFORMER or an event of interest
+- ex: user enters “red hot” into the search bar
 
 ```
+## Process
+
+1st API (SEATGEEK) gets
+- list of performers 
+- ex: GET https://api.seatgeek.com/2/performers?q=red+hot&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU
+- Use insomnia to generate the JS code
+- get the performer ID from the fetch request
+- use the performer ID to get their event info (venue name, address, city, zip, etc)
+- ex: GET https://api.seatgeek.com/2/events?performers.id=9052&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU
+- use location info for 2nd API
+
+2nd API (AMADEUS) TAKES the VENUE address/city from 1st API
+- find hotels nearby
+- How to add the booking: https://developers.amadeus.com/blog/build-hotel-booking-engine-amadeus-api
 
 ## Wireframes
 
-### Desktop
+### Landing
+![image](https://user-images.githubusercontent.com/30813052/185257820-b5bff0d5-649b-4dd8-b42a-c38bc7a3ab7f.png)
 
-![image](https://user-images.githubusercontent.com/30813052/184746618-513a8d82-0981-407b-925e-5facebc26bb7.png)
+### Search Results
+![image](https://user-images.githubusercontent.com/30813052/185257853-3ea5874b-d558-4da5-aaa9-3b998df66f36.png)
 
-### Mobile
-
-![image](https://user-images.githubusercontent.com/30813052/184746675-4eec5138-a9b9-4138-9db6-18cd25ffea85.png)
-
+### Saved Search
+![image](https://user-images.githubusercontent.com/30813052/185257937-18b74416-7488-471b-8665-50a737f8c15c.png)
 
