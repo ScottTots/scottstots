@@ -1,4 +1,5 @@
 var searchBtn = document.getElementById('search-btn'); //search button
+var results = document.querySelector('.results');
 
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
 
@@ -42,7 +43,7 @@ function getPerformerId(artist) {
             } else {
                 var perfID = perfData.performers[0].id; // gets the performer ID
                 console.log('This is the ID '+ perfID);}
-                //localStorage.setItem('performerID', perfID);
+                //localStorage.setItem('performerID', perfID); ...might need for local storage? 
                 var hasEvents = perfData.performers[0].has_upcoming_events; 
                 if(hasEvents == false) { //checks if the artist has upcoming shows
                     console.log('No events');
@@ -74,27 +75,48 @@ function getEventInfo(ID) {
         })
         .then(function (eventData) {
             console.log('Data OK', eventData);  
-            //This should be changed in final code to create the results list using for loop. This is just demo-ing to ensure data is getting pulled properly
-            $('#artist').text(eventData.events[0].performers[0].name);
-            $('#event-title').text(eventData.events[0].title);
-            $('#venue-name').text(eventData.events[0].venue.name);
-            $('#venue-city').text(eventData.events[0].venue.city + ', ');
-            $('#venue-state').text(eventData.events[0].venue.state);
+            var resultsHTML = ' ';
+            for(var i = 0; i < 6; i++) {
+                var artist = eventData.events[i].performers[0].name;
+                var eventTitle = eventData.events[i].title;
+                var venueName = eventData.events[i].venue.name;
+                var venueCity = eventData.events[i].venue.city;
+                var venueState = eventData.events[i].venue.state;
+                var price = eventData.events[i].stats.average_price;
+                var utc = eventData.events[i].datetime_utc;
+                var reformatDate = moment(utc).format('dddd, MMMM Do YYYY, h:mm a');
+                var tUrl = eventData.events[i].url;
+                // var imgSrc = eventData.events[i].performers[i].image; //image that can be used for artist info/profile after search
+                //$('#artist-img').attr('src', imgSrc); //  img to html
 
-            var utc = eventData.events[0].datetime_utc;
-            var reformatDate = moment(utc).format('dddd, MMMM Do YYYY, h:mm a');
+                resultsHTML += `
+                <tr class="bg-indigo-100 border-b">
+                    <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
+                        <span class="text-xl text-indigo-900" id="event-title">${eventTitle}</span>
+                        <span class="text-xl text-indigo-900" id="artist">${artist}</span>
+                    </th>
+                    <td class="py-4 px-6 text-indigo-900">
+                         <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
+                        <span class="text-m text-indigo-900" id="venue-city">${venueCity}</span><span class="text-m text-indigo-900" id="venue-state">, ${venueState}</span>
+                    </td>
+                    <td class="py-4 px-6 text-indigo-900">
+                        <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
+                    </td>
+                    <td class="py-4 px-6 text-indigo-900">
+                        <span class="text-m text-indigo-900" id="price">$ ${price}</span>
+                    </td>
+                    <td class="py-4 px-6">
+                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
+                    </td>
+                </tr>
+                `
+                results.innerHTML = resultsHTML;
 
-            $('#date').text(reformatDate); 
-            $('#price').text('$' + eventData.events[0].stats.average_price);
 
-            var tUrl = eventData.events[0].url;
-            $('#ticket-url').attr('href', tUrl);
+                var lat = eventData.events[i].venue.location.lat; //VENUE COORDINATES TO USE FOR HOTEL API
+                var lon = eventData.events[i].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
+            }
 
-            var imgSrc = eventData.events[0].performers[0].image;
-            $('#artist-img').attr('src', imgSrc);
-
-            var lat = eventData.events[0].venue.location.lat; //VENUE COORDINATES TO USE FOR HOTEL API
-            var lon = eventData.events[0].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
 })
 }
 
@@ -103,3 +125,8 @@ function getEventInfo(ID) {
 //  EVENT LISTENER
 //---------------------------------------------------------------------------------------------------------------------
 searchBtn.addEventListener('click', checkArtist);
+
+
+
+
+
