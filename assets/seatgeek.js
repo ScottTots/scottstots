@@ -16,6 +16,7 @@ function checkArtist(event) {
     } else {
         searchInput = searchInput.replace(/\s+/g,'-');
         console.log('Successfully replaced ' + searchInput);
+        clearShows();
         getPerformerId(searchInput);
     }
 }
@@ -93,6 +94,7 @@ function getEventInfo(ID) {
                 <tr class="bg-indigo-100 border-b">
                     <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
                         <span class="text-xl text-indigo-900" id="event-title">${eventTitle}</span>
+
                     </th>
                     <td class="py-4 px-6 text-indigo-900">
                          <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
