@@ -2,7 +2,7 @@ var searchBtn = document.getElementById('search-btn'); //search button
 var results = document.querySelector('.results');
 
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
-
+var amadeusKey = "ytPwFK6RBADmgdzCcjDKnyCUuDSMBpsS";
 //---------------------------------------------------------------------------------------------------------------------
 // This function will check if the input is blank; OR
 // If input has more than 1 word, the spaces will be replaced with dashes
@@ -116,9 +116,22 @@ function getEventInfo(ID) {
 
                 var lat = eventData.events[i].venue.location.lat; //VENUE COORDINATES TO USE FOR HOTEL API
                 var lon = eventData.events[i].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
+                getHotels(lat,lon);
             }
 
 })
+}
+
+//uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and address
+function getHotels(latitude, longitude) {
+    var eventUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL" + amadeusKey;
+    fetch(eventUrl)
+    var data = await response.json();
+    var hotel = data.name;
+    var address = data.address;
+
+    $("#hotel").text(hotel);
+    $("#address").text(address);
 }
 
 //clears search results
