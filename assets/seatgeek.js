@@ -93,7 +93,7 @@ function getEventInfo(ID) {
                 <tr class="bg-indigo-100 border-b">
                     <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
                         <span class="text-sm text-indigo-900" id="event-title">${eventTitle}</span></br>
-                        <span class="text-sm text-indigo-900 font medium" id="artist">${artist}</span>
+                        <span class="text-sm text-indigo-900 font-medium" id="artist">${artist}</span>
                     </th>
                     <td class="py-4 px-6 text-indigo-900">
                          <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
