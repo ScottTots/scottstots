@@ -9,12 +9,14 @@ var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
 //---------------------------------------------------------------------------------------------------------------------
 function checkArtist(event) {
     event.preventDefault();
+    clearShows();
     var searchInput = document.getElementById('artists-search').value; //gets input from the user
     if (searchInput == '') {
         return;
     } else {
         searchInput = searchInput.replace(/\s+/g,'-');
         console.log('Successfully replaced ' + searchInput);
+        clearShows();
         getPerformerId(searchInput);
     }
 }
@@ -34,26 +36,25 @@ function getPerformerId(artist) {
         }
         })
         .then(function (perfData) {
-            console.log('Data OK', perfData);
+            console.log('PerfData OK', perfData);
             if(perfData.performers.length == 0) {  //if no array in performers then return
                 console.log('No artist or ID found');
-                $('#artist').text('No results found. Search another artist.');
-                $('#artist-img').attr('src', '');
+                $('#artist').text('No results found. Search another artist.'); //create modal for this instead?
+                //$('#artist-img').attr('src', ''); //removes artist image
                 return;
             } else {
                 var perfID = perfData.performers[0].id; // gets the performer ID
-                console.log('This is the ID '+ perfID);}
-                //localStorage.setItem('performerID', perfID); ...might need for local storage? 
+                console.log('The perf ID is '+ perfID);}
                 var hasEvents = perfData.performers[0].has_upcoming_events; 
                 if(hasEvents == false) { //checks if the artist has upcoming shows
                     console.log('No events');
-                    $('#event-title').text('No upcoming events');
-                    $('#artist').text(perfData.performers[0].name)
-                    var imgSrc = perfData.performers[0].image;
-                    $('#artist-img').attr('src', imgSrc);
+                    $('#event-title').text('No upcoming shows');
+                    $('#artist').text('for ' + perfData.performers[0].name)
+                    //var imgSrc = perfData.performers[0].image; //artist image that can be used for artist info/card if wanted
+                    //$('#artist-img').attr('src', imgSrc);
                     return;
                 } else {
-                    $('#artist').text(perfData.performers[0].name);
+                    $('#artist').text('for ' + perfData.performers[0].name);
                     getEventInfo(perfID);
                 }
         })
@@ -74,9 +75,9 @@ function getEventInfo(ID) {
         }
         })
         .then(function (eventData) {
-            console.log('Data OK', eventData);  
+            console.log('EventData OK', eventData);  
             var resultsHTML = ' ';
-            for(var i = 0; i < 6; i++) {
+            for(var i = 0; i < 5; i++) {
                 var artist = eventData.events[i].performers[0].name;
                 var eventTitle = eventData.events[i].title;
                 var venueName = eventData.events[i].venue.name;
@@ -92,8 +93,8 @@ function getEventInfo(ID) {
                 resultsHTML += `
                 <tr class="bg-indigo-100 border-b">
                     <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
-                        <span class="text-sm text-indigo-900" id="event-title">${eventTitle}</span></br>
-                        <span class="text-sm text-indigo-900 font-medium" id="artist">${artist}</span>
+                        <span class="text-xl text-indigo-900" id="event-title">${eventTitle}</span>
+
                     </th>
                     <td class="py-4 px-6 text-indigo-900">
                          <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
@@ -120,6 +121,13 @@ function getEventInfo(ID) {
 })
 }
 
+//clears search results
+function clearShows() {
+    while (results.children.length > 1) {
+        results.removeChild(results.lastChild);
+    }
+    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotels').text('');
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 //  EVENT LISTENER
