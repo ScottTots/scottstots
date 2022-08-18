@@ -87,7 +87,7 @@ function getEventInfo(ID) {
                 var reformatDate = moment(utc).format('dddd, MMMM Do YYYY, h:mm a');
                 var tUrl = eventData.events[i].url;
                 // var imgSrc = eventData.events[i].performers[i].image; //image that can be used for artist info/profile after search
-                //$('#artist-img').attr('src', imgSrc); //  img to html
+                //$('#artist-img').attr('src', imgSrc); //  puts img to html
 
                 resultsHTML += `
                 <tr class="bg-indigo-100 border-b">
