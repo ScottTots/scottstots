@@ -121,7 +121,7 @@ function getEventInfo(ID) {
 })
 }
 
-//uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and address
+//uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
 function getHotels(latitude, longitude) {
     var tempKey = "";
     const options = {
@@ -129,40 +129,30 @@ function getHotels(latitude, longitude) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: new URLSearchParams({
           grant_type: 'client_credentials',
-          client_id: 'PZiXbO8iTxUXUSd2AvZGDsXAPUndJBQh',
-          client_secret: 'gdNI5vs04TwFNOuf'
+          client_id: 'ytPwFK6RBADmgdzCcjDKnyCUuDSMBpsS',
+          client_secret: 'I01l7AoppjGOv3Pw'
         })
       };
       
-      fetch('https://test.api.amadeus.com/v1/security/oauth2/token', options)
+      fetch('https://api.amadeus.com/v1/security/oauth2/token', options)
         .then(response => response.json())
-        .then(response => tempKey = response.access_token)
+        .then(response => {
+            tempKey = response.access_token
+            const options1 = {method: 'GET', headers: {Authorization: 'Bearer '+ tempKey}};
+            var eventUrl = "https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL";
+            fetch(eventUrl,options1)
+            .then(amadeus => amadeus.json())
+            .then(function (data) {
+           var hotel = data.data[0].name;
+           var distance = data.data[0].distance;   
+                console.log(hotel);
+               console.log(distance);
+            })
+        }
+        )
         .catch(err => console.error(err));
-
-        const options1 = {method: 'GET', headers: {Authorization: 'Bearer GxlrdlcepePHEWGuOm0JXupj0xci'}};
-
-    var eventUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL" + tempKey;
-    fetch(eventUrl,options1)
-    .then(function (data) {
-    var data1 = data.json();
-    var hotel = data.name;
-    var address = data.address;
-
-
-    if(!data.ok){  
-        throw data.json();
-    } else {
-        console.log(data1);
-        console.log(hotel);
-        console.log(address);;
     }
-    })
-}
-/*    .then(function (eventData) {
-    $("#hotel").text(hotel);
-    $("#address").text(address);  
-}
-*/
+    
 //clears search results
 function clearShows() {
     while (results.children.length > 1) {
