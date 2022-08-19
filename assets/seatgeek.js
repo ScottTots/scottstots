@@ -1,8 +1,7 @@
 var searchBtn = document.getElementById('search-btn'); //search button
 var results = document.querySelector('.results');
-
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
-var amadeusKey = "ytPwFK6RBADmgdzCcjDKnyCUuDSMBpsS";
+
 //---------------------------------------------------------------------------------------------------------------------
 // This function will check if the input is blank; OR
 // If input has more than 1 word, the spaces will be replaced with dashes
@@ -124,16 +123,46 @@ function getEventInfo(ID) {
 
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and address
 function getHotels(latitude, longitude) {
-    var eventUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL" + amadeusKey;
-    fetch(eventUrl)
-    var data = await response.json();
+    var tempKey = "";
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({
+          grant_type: 'client_credentials',
+          client_id: 'PZiXbO8iTxUXUSd2AvZGDsXAPUndJBQh',
+          client_secret: 'gdNI5vs04TwFNOuf'
+        })
+      };
+      
+      fetch('https://test.api.amadeus.com/v1/security/oauth2/token', options)
+        .then(response => response.json())
+        .then(response => tempKey = response.access_token)
+        .catch(err => console.error(err));
+
+        const options1 = {method: 'GET', headers: {Authorization: 'Bearer GxlrdlcepePHEWGuOm0JXupj0xci'}};
+
+    var eventUrl = "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL" + tempKey;
+    fetch(eventUrl,options1)
+    .then(function (data) {
+    var data1 = data.json();
     var hotel = data.name;
     var address = data.address;
 
-    $("#hotel").text(hotel);
-    $("#address").text(address);
-}
 
+    if(!data.ok){  
+        throw data.json();
+    } else {
+        console.log(data1);
+        console.log(hotel);
+        console.log(address);;
+    }
+    })
+}
+/*    .then(function (eventData) {
+    $("#hotel").text(hotel);
+    $("#address").text(address);  
+}
+*/
 //clears search results
 function clearShows() {
     while (results.children.length > 1) {
