@@ -1,5 +1,6 @@
 var searchBtn = document.getElementById('search-btn'); //search button
 var results = document.querySelector('.results');
+const modal = document.querySelector('.modal-popup')
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -38,7 +39,9 @@ function getPerformerId(artist) {
             console.log('PerfData OK', perfData);
             if(perfData.performers.length == 0) {  //if no array in performers then return
                 console.log('No artist or ID found');
-                $('#artist').text('No results found. Search another artist.'); //create modal for this instead?
+                //$('#artist').text('No results found. Search another artist.'); //create modal for this instead?
+                modal.toggle();
+
                 //$('#artist-img').attr('src', ''); //removes artist image
                 return;
             } else {
@@ -121,7 +124,7 @@ function getEventInfo(ID) {
 }
 
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
-function getHotels(latitude, longitude) {
+/* function getHotels(latitude, longitude) {
     var tempKey = "";
     const options = {
         method: 'POST',
@@ -132,7 +135,8 @@ function getHotels(latitude, longitude) {
           client_secret: 'I01l7AoppjGOv3Pw'
         })
       };
-      
+     
+    
       fetch('https://api.amadeus.com/v1/security/oauth2/token', options)
         .then(response => response.json())
         .then(response => {
@@ -151,6 +155,7 @@ function getHotels(latitude, longitude) {
         )
         .catch(err => console.error(err));
     }
+    */
     
 //clears search results
 function clearShows() {
@@ -163,9 +168,4 @@ function clearShows() {
 //---------------------------------------------------------------------------------------------------------------------
 //  EVENT LISTENER
 //---------------------------------------------------------------------------------------------------------------------
-searchBtn.addEventListener('click', checkArtist);
-
-
-
-
-
+searchBtn.addEventListener('click', checkArtist); 
