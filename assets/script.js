@@ -1,8 +1,8 @@
 var searchBtn = document.getElementById('search-btn'); //search button
 var results = document.querySelector('.results');
-const modal = document.querySelector('.modal-popup')
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
-
+var hotel = "";
+var distance = "";
 //---------------------------------------------------------------------------------------------------------------------
 // This function will check if the input is blank; OR
 // If input has more than 1 word, the spaces will be replaced with dashes
@@ -78,8 +78,8 @@ function getEventInfo(ID) {
         })
         .then(function (eventData) {
             console.log('EventData OK', eventData);  
-            var resultsHTML = ' ';
             for(var i = 0; i < 5; i++) {
+                var block = i;
                 var artist = eventData.events[i].performers[0].name;
                 var eventTitle = eventData.events[i].title;
                 var venueName = eventData.events[i].venue.name;
@@ -89,40 +89,16 @@ function getEventInfo(ID) {
                 var utc = eventData.events[i].datetime_utc;
                 var reformatDate = moment(utc).format('dddd, MMMM Do YYYY, h:mm a');
                 var tUrl = eventData.events[i].url;
-
-                resultsHTML += `
-                <tr class="bg-indigo-100 border-b">
-                    <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
-                        <span class="text-m text-indigo-900" id="event-title">${eventTitle}</span>
-                    </th>
-                    <td class="py-4 px-6 text-indigo-900">
-                         <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
-                        <span class="text-m text-indigo-900" id="venue-city">${venueCity}</span><span class="text-m text-indigo-900" id="venue-state">, ${venueState}</span>
-                    </td>
-                    <td class="py-4 px-6 text-indigo-900">
-                        <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
-                    </td>
-                    <td class="py-4 px-6 text-indigo-900">
-                        <span class="text-m text-indigo-900" id="price">$ ${price}</span>
-                    </td>
-                    <td class="py-4 px-6">
-                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
-                    </td>
-                </tr>
-                `
-                results.innerHTML = resultsHTML;
-
-
                 var lat = eventData.events[i].venue.location.lat; //VENUE COORDINATES TO USE FOR HOTEL API
                 var lon = eventData.events[i].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
-                getHotels(lat,lon);
+                getHotels(block,lat,lon, artist, eventTitle,venueName,venueCity,venueState,price,reformatDate,tUrl);
             }
 
 })
 }
 
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
- function getHotels(latitude, longitude) {
+ function getHotels(block, latitude, longitude, artist, eventTitle, venueName,venueCity,venueState,price,reformatDate,tUrl) {
     var tempKey = "";
     const options = {
         method: 'POST',
@@ -134,7 +110,6 @@ function getEventInfo(ID) {
         })
       };
      
-    
       fetch('https://api.amadeus.com/v1/security/oauth2/token', options)
         .then(response => response.json())
         .then(response => {
@@ -145,25 +120,43 @@ function getEventInfo(ID) {
             .then(amadeus => amadeus.json())
             .then(function (data) {
                 var hotelHtml = " ";
-                for(var i=0; i<5; i++) {}
-           var hotel = data.data[i].name;
-           var distance = data.data[i].distance;   
-
-           hotelHtml += `
-           <tr class="bg-indigo-100 border-b">
-               <td class="py-4 px-6 text-indigo-900">
-                    <span class="text-m text-indigo-900" id="hotelName">${hotel}</span> <br>
-                   <span class="text-m text-indigo-900" id="hotelDistance">${distance}</span>
-               </td>
-               `
+                    var hotel = data.data[0].name; 
+                    var resultsHTML = "";
+                    console.log(hotel);
+                 
+                resultsHTML += `
+                <tr class="bg-indigo-100 border-b">
+                    <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
+                        <span class="text-m text-indigo-900" id="event-title">${eventTitle}</span>
+                    </th>
+                    <td class="py-4 px-6 text-indigo-900">
+                        <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
+                        <span class="text-m text-indigo-900" id="venue-city">${venueCity}</span>
+                        <span class="text-m text-indigo-900" id="venue-state">, ${venueState}</span>
+                    </td>
+                    <td class="py-4 px-6 text-indigo-900">
+                        <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
+                    </td>
+                    <td class="py-4 px-6 text-indigo-900">
+                        <span class="text-m text-indigo-900" id="price">${price}</span>
+                    </td>
+                    <td class="py-4 px-6 text-indigo-900">
+                        <span class="text-m text-indigo-900" id="hotelName">${hotel}</span> 
+                    </td> 
+                    <td class="py-4 px-6">
+                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
+                    </td>
+                    
+                </tr>
+                `
+                results.innerHTML = resultsHTML;
             }
             )
         }
         )
         .catch(err => console.error(err));
     }
-    
-    
+     
 //clears search results
 function clearShows() {
     while (results.children.length > 1) {
