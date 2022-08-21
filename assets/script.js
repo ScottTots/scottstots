@@ -1,6 +1,7 @@
 var searchBtn = document.getElementById('search-btn'); //search button
 var results = document.querySelector('.results');
 const modal = document.querySelector('.modal-popup')
+var resultsHTML = ' ';
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -39,10 +40,7 @@ function getPerformerId(artist) {
             console.log('PerfData OK', perfData);
             if(perfData.performers.length == 0) {  //if no array in performers then return
                 console.log('No artist or ID found');
-                //$('#artist').text('No results found. Search another artist.'); //create modal for this instead?
-                modal.toggle();
-
-                //$('#artist-img').attr('src', ''); //removes artist image
+                $('##event-title').text('No artist found! Try searching another artist.')
                 return;
             } else {
                 var perfID = perfData.performers[0].id; // gets the performer ID
@@ -52,8 +50,6 @@ function getPerformerId(artist) {
                     console.log('No events');
                     $('#event-title').text('No upcoming shows');
                     $('#artist').text('for ' + perfData.performers[0].name)
-                    //var imgSrc = perfData.performers[0].image; //artist image that can be used for artist info/card if wanted
-                    //$('#artist-img').attr('src', imgSrc);
                     return;
                 } else {
                     $('#artist').text('for ' + perfData.performers[0].name);
@@ -78,9 +74,7 @@ function getEventInfo(ID) {
         })
         .then(function (eventData) {
             console.log('EventData OK', eventData);  
-            var resultsHTML = ' ';
             for(var i = 0; i < 5; i++) {
-                var artist = eventData.events[i].performers[0].name;
                 var eventTitle = eventData.events[i].title;
                 var venueName = eventData.events[i].venue.name;
                 var venueCity = eventData.events[i].venue.city;
@@ -90,36 +84,35 @@ function getEventInfo(ID) {
                 var reformatDate = moment(utc).format('dddd, MMMM Do YYYY, h:mm a');
                 var tUrl = eventData.events[i].url;
 
-                resultsHTML += `
-                <tr class="bg-indigo-100 border-b">
-                    <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
-                        <span class="text-m text-indigo-900" id="event-title">${eventTitle}</span>
-                    </th>
-                    <td class="py-4 px-6 text-indigo-900">
-                         <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
-                        <span class="text-m text-indigo-900" id="venue-city">${venueCity}</span><span class="text-m text-indigo-900" id="venue-state">, ${venueState}</span>
-                    </td>
-                    <td class="py-4 px-6 text-indigo-900">
-                        <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
-                    </td>
-                    <td class="py-4 px-6 text-indigo-900">
-                        <span class="text-m text-indigo-900" id="price">$ ${price}</span>
-                    </td>
-                    <td class="py-4 px-6">
-                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
-                    </td>
-                </tr>
-                `
-                results.innerHTML = resultsHTML;
-
-
                 var lat = eventData.events[i].venue.location.lat; //VENUE COORDINATES TO USE FOR HOTEL API
                 var lon = eventData.events[i].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
-                getHotels(lat,lon);
+
+                var lat0 = eventData.events[0].venue.location.lat; 
+                var lon0 = eventData.events[0].venue.location.lon;
+
+                var lat1 = eventData.events[1].venue.location.lat; 
+                var lon1 = eventData.events[1].venue.location.lon;
+
+                var lat2 = eventData.events[2].venue.location.lat; 
+                var lon2 = eventData.events[2].venue.location.lon;
+
+                var lat3 = eventData.events[3].venue.location.lat; 
+                var lon3 = eventData.events[3].venue.location.lon;
+
+                var lat4 = eventData.events[4].venue.location.lat; 
+                var lon4 = eventData.events[4].venue.location.lon;
+
+                changeEventHTML(eventTitle,venueName,venueCity,venueCity,venueCity, venueState,price, reformatDate,tUrl);
             }
+            var latArr =[lat0,lat1,lat2,lat3,lat4];
+            var lonArr =[lon0,lon1,lon2,lon3,lon4];
+            console.log(latArr);
+            console.log(lonArr);
+            getHotels(latArr,lonArr);
 
 })
 }
+
 
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
  function getHotels(latitude, longitude) {
@@ -134,45 +127,75 @@ function getEventInfo(ID) {
         })
       };
      
-    
+
+
+    for(var i = 0; i < 5; i++) {
       fetch('https://api.amadeus.com/v1/security/oauth2/token', options)
         .then(response => response.json())
         .then(response => {
             tempKey = response.access_token
-            const options1 = {method: 'GET', headers: {Authorization: 'Bearer '+ tempKey}};
-            var eventUrl = "https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL";
+            const options1 = {method: 'GET', headers: {Authorization: 'Bearer '+ tempKey}}; 
+            var eventUrl = "https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=${i}&longitude=${i}" + longitude[i] + "&radius=5&radiusUnit=MILE&hotelSource=ALL";
             fetch(eventUrl,options1)
             .then(amadeus => amadeus.json())
             .then(function (data) {
-                var hotelHtml = " ";
-                for(var i=0; i<5; i++) {}
-           var hotel = data.data[i].name;
-           var distance = data.data[i].distance;   
-
-           hotelHtml += `
-           <tr class="bg-indigo-100 border-b">
-               <td class="py-4 px-6 text-indigo-900">
-                    <span class="text-m text-indigo-900" id="hotelName">${hotel}</span> <br>
-                   <span class="text-m text-indigo-900" id="hotelDistance">${distance}</span>
-               </td>
-               `
-            }
-            )
+                var hotel = data.data[0].name; 
+                console.log(hotel);
+                //changeHotelHTML(hotel);
+            })
         }
         )
         .catch(err => console.error(err));
-    }
-    
+        
+        }    }
+;
     
 //clears search results
 function clearShows() {
     while (results.children.length > 1) {
         results.removeChild(results.lastChild);
     }
-    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotels').text('');
+    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotelName').text('');$('#hotelDistance').text('');
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 //  EVENT LISTENER
 //---------------------------------------------------------------------------------------------------------------------
 searchBtn.addEventListener('click', checkArtist); 
+
+
+
+function changeEventHTML (eventTitle,venueName,venueCity,venueCity,venueCity, venueState,price, reformatDate,tUrl) {
+
+            resultsHTML += `
+            <tr class="bg-indigo-100 border-b">
+            <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
+                <span class="text-sm text-indigo-900" id="event-title">${eventTitle}</span>
+            </th>
+            <td class="py-4 px-6 text-indigo-900">
+                <span class="text-m text-indigo-900" id="venue-name">${venueName}</span> <br>
+                <span class="text-m text-indigo-900" id="venue-city">${venueCity}, </span>
+                <span class="text-m text-indigo-900" id="venue-state">${venueState}</span>
+            </td>
+            <td class="py-4 px-6 text-indigo-900">
+                <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
+            </td>
+            <td class="py-4 px-6 text-indigo-900 hotel-parent">
+                <span class="text-m text-indigo-900" id="price">${price}</span>
+            </td>
+            <td class="py-4 px-6 text-indigo-900">
+                <span class="text-m text-indigo-900" id="hotelName"></span>
+            </td>
+            <td class="py-4 px-6">
+                <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
+                <a href="" id="save" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Save</a><br>
+            </td>
+        </tr>
+                `
+                results.innerHTML = resultsHTML;
+}
+
+
+function changeHotelHTML (hotel) {
+    document.getElementById("hotelName").innerHTML = hotel; 
+}
