@@ -89,8 +89,6 @@ function getEventInfo(ID) {
                 var utc = eventData.events[i].datetime_utc;
                 var reformatDate = moment(utc).format('dddd, MMMM Do YYYY, h:mm a');
                 var tUrl = eventData.events[i].url;
-                // var imgSrc = eventData.events[i].performers[i].image; //image that can be used for artist info/profile after search
-                //$('#artist-img').attr('src', imgSrc); //  puts img to html
 
                 resultsHTML += `
                 <tr class="bg-indigo-100 border-b">
@@ -124,7 +122,7 @@ function getEventInfo(ID) {
 }
 
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
-/* function getHotels(latitude, longitude) {
+ function getHotels(latitude, longitude) {
     var tempKey = "";
     const options = {
         method: 'POST',
@@ -146,16 +144,25 @@ function getEventInfo(ID) {
             fetch(eventUrl,options1)
             .then(amadeus => amadeus.json())
             .then(function (data) {
+                var hotelHtml = " ";
+                for(var i=0; i<5; i++) {}
            var hotel = data.data[i].name;
            var distance = data.data[i].distance;   
-                console.log(hotel);
-               console.log(distance);
-            })
+
+           hotelHtml += `
+           <tr class="bg-indigo-100 border-b">
+               <td class="py-4 px-6 text-indigo-900">
+                    <span class="text-m text-indigo-900" id="hotelName">${hotel}</span> <br>
+                   <span class="text-m text-indigo-900" id="hotelDistance">${distance}</span>
+               </td>
+               `
+            }
+            )
         }
         )
         .catch(err => console.error(err));
     }
-    */
+    
     
 //clears search results
 function clearShows() {
