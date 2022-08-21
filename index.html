@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Concerteer</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script src="assets/script.js"></script>
         <link rel="stylesheet" href="./assets/style.css">
         <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
@@ -28,44 +27,25 @@
 
     <!--Hero-->
         <hero class="p-32 text-center">
-            <h1 class="text-7xl font-bold mb-2 text-white">concerteer</h1>
-            <p class="font-medium">Find upcoming shows for your favorite artists and hotels nearby</p>
+            <h1 class="text-7xl font-bold mb-1 text-indigo-100">concerteer</h1>
+            <p class="font-medium text-indigo-900">Find upcoming shows for your favorite artists and hotels nearby</p>
         </hero>
 
-    <!--Search Bar-->
-      <!--  <div class="px-6 py-6>
-            <h1 class="text-sm text-indigo-900 font-medium py-2">Search For Artist or Event</h1>
-            <form class="flex items-center">   
-                <label for="simple-search" class="sr-only">Search</label>
-                <div class="relative">
-                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg aria-hidden="true" class="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                    </div>
-                    <input type="text" id="artists-search" class="bg-indigo-50 border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 p-2.5" placeholder="Search" required="">
-                </div>
-                <button type="submit" id="search-btn" class="p-2.5 ml-2 text-sm font-medium text-indigo-50 bg-indigo-700 rounded-lg border border-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span class="sr-only">Search</span>
-                </button>  
-            </form>
-        </div>
-    -->
-
-    <!-- another version search bar-->    
+    <!-- Search bar-->    
         <div class="max-w-2xl mx-auto mb-8 mt-8">
             <form>
                 <label for="default-search"
-                    class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+                    class="mb-2 text-sm font-medium text-indigo-900 sr-only">Search</label>
                 <div class="relative">
                     <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor"
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
                     <input type="search" id="artists-search"
-                        class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-indigo-900 focus:ring-indigo-500 focus:border-indigo-500"
+                        class="block p-4 pl-10 w-full text-sm text-indigo-900 bg-indigo-50 rounded-lg border border-indigo-900 focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Search artist or event" required>
                     <button type="submit" id="search-btn"
                         class="text-white absolute right-2.5 bottom-2.5 bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
@@ -73,12 +53,9 @@
             </form>
         </div>
 
-    <!-- Modal-->
-    
-
     <!--Search Result Table-->        
         <div class="overflow-x-auto relative">
-            <h1 class="text-1xl text-indigo-900 font-semibold py-2 px-6">Up Coming Shows <span id="artist"></span></h1>
+            <h1 class="text-1xl text-indigo-100 font-semibold py-2 px-6">Up Coming Shows <span id="artist"></span></h1>
             <table class="w-full text-sm text-left text-indigo-500">
                 <thead class="text-xs text-indigo-700 uppercase bg-indigo-50">
                     <tr>
@@ -126,7 +103,7 @@
 
     <!--Hotels Results Table-->
         <div class="overflow-x-auto relative">
-            <h1 class="text-1xl text-indigo-900 font-semibold py-2 px-6">Accommodation</h1>
+            <h1 class="text-1xl text-indigo-100 font-semibold py-2 px-6">Accommodation</h1>
             <table class="w-full text-sm text-left text-indigo-500">
                 <thead class="text-xs text-indigo-700 uppercase bg-indigo-50">
                     <tr>
@@ -181,5 +158,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./assets/seatgeek.js"></script>
+    <script src="assets/script.js"></script>
 </html>
