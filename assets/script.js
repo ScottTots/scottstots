@@ -1,8 +1,9 @@
 var searchBtn = document.getElementById('search-btn'); //search button
+var recentBtn = document.getElementById('recent-Search'); // Recent search button
 var results = document.querySelector('.results');
 var seatGKey = '&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU';
-var hotel = "";
-var distance = "";
+var lastSearch = localStorage.getItem("lastSearch");
+
 //---------------------------------------------------------------------------------------------------------------------
 // This function will check if the input is blank; OR
 // If input has more than 1 word, the spaces will be replaced with dashes
@@ -15,10 +16,27 @@ function checkArtist(event) {
         return;
     } else {
         searchInput = searchInput.replace(/\s+/g,'-');
+        localStorage.setItem("lastSearch", searchInput); 
         console.log('Successfully replaced ' + searchInput);
+        console.log(lastSearch)
         clearShows();
         getPerformerId(searchInput);
     }
+}
+
+// Returns user to their last searched artist upcoming concerts
+function recentSearch() {
+    if (lastSearch == '') {
+        return;
+    } else {
+        lastSearch = lastSearch.replace(/\s+/g,'-');
+        localStorage.setItem("lastSearch", lastSearch); 
+        console.log('Successfully replaced ' + lastSearch);
+        console.log(lastSearch)
+        clearShows();
+        getPerformerId(lastSearch);
+    }
+
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -62,7 +80,6 @@ function getPerformerId(artist) {
         })
 }
 
-
 //---------------------------------------------------------------------------------------------------------------------
 //  2nd call uses performer ID to search for events
 //---------------------------------------------------------------------------------------------------------------------
@@ -91,10 +108,9 @@ function getEventInfo(ID) {
                 var tUrl = eventData.events[i].url;
                 var lat = eventData.events[i].venue.location.lat; //VENUE COORDINATES TO USE FOR HOTEL API
                 var lon = eventData.events[i].venue.location.lon; //VENUE COORDINATES TO USE FOR HOTEL API
-                getHotels(block,lat,lon, artist, eventTitle,venueName,venueCity,venueState,price,reformatDate,tUrl);
+                getHotels(block, lat, lon, artist, eventTitle, venueName, venueCity, venueState, price, reformatDate, tUrl);
             }
-
-})
+        })
 }
 
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
@@ -119,9 +135,8 @@ function getEventInfo(ID) {
             fetch(eventUrl,options1)
             .then(amadeus => amadeus.json())
             .then(function (data) {
-                var hotelHtml = " ";
+                    var resultsHTML = results.innerHTML;
                     var hotel = data.data[0].name; 
-                    var resultsHTML = "";
                     console.log(hotel);
                  
                 resultsHTML += `
@@ -168,4 +183,5 @@ function clearShows() {
 //---------------------------------------------------------------------------------------------------------------------
 //  EVENT LISTENER
 //---------------------------------------------------------------------------------------------------------------------
-searchBtn.addEventListener('click', checkArtist); 
+searchBtn.addEventListener('click', checkArtist);
+recentBtn.addEventListener('click', recentSearch);
