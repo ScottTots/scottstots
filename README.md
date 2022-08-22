@@ -1,6 +1,7 @@
 # scottstots
 
 ## Project Title: Concerteer
+URL: https://scotttots.github.io/scottstots/
 
 ## Project Description
 
@@ -12,7 +13,12 @@ In this project we will be building a responsive website that allows you to sear
 As a music lover I am searching for my favorite artists upcoming shows. 
 I then want to see upcoming concerts and see which hotel is closest in the city where the event is held.
 I also want to be able to got back to my last search.
-- ex: user enters “bad bunny” into the search bar the table will update to display the date, location, ticket price, closest hotel, and a link to get tickets.
+- ex: user enters “bad bunny” into the search bar the table will update to display 
+the date, 
+location, 
+ticket price, 
+closest hotel, 
+and a link to get tickets.
 
 ```
 ## Process
@@ -30,6 +36,14 @@ I also want to be able to got back to my last search.
 - find hotels nearby to the venue of the concert
 
 The code works down the two apis to fill information for an event then updates the html before beginning the process again up to 5 times.
+
+## Screenshots
+
+### Search Complete
+![Concerteer Bad Bunny Search](https://user-images.githubusercontent.com/30813052/185978356-3788d83f-305c-42b3-8bdf-30533ac0e077.png)
+### Error Modal
+![Concerteer No input](https://user-images.githubusercontent.com/30813052/185978381-a8618fcf-b25a-446f-aa53-82d9410d13ca.png)
+
 
 ## Wireframes
 
