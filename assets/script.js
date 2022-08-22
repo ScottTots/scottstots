@@ -44,7 +44,7 @@ function recentSearch() {
 //---------------------------------------------------------------------------------------------------------------------
 function getPerformerId(artist) {
     var perfUrl = 'https://api.seatgeek.com/2/performers?slug='+ artist +seatGKey;
-
+    
     fetch(perfUrl)
         .then(function (response) {
         if(!response.ok){  
@@ -57,10 +57,8 @@ function getPerformerId(artist) {
             console.log('PerfData OK', perfData);
             if(perfData.performers.length == 0) {  //if no array in performers then return
                 console.log('No artist or ID found');
-                //$('#artist').text('No results found. Search another artist.'); //create modal for this instead?
-                modal.toggle();
-
-                //$('#artist-img').attr('src', ''); //removes artist image
+                $('#popup-modal').removeClass('hidden'); //modal for no artist found
+                $('#modal-msg').text('No artist found! Try searching again.');
                 return;
             } else {
                 var perfID = perfData.performers[0].id; // gets the performer ID
@@ -68,10 +66,8 @@ function getPerformerId(artist) {
                 var hasEvents = perfData.performers[0].has_upcoming_events; 
                 if(hasEvents == false) { //checks if the artist has upcoming shows
                     console.log('No events');
-                    $('#event-title').text('No upcoming shows');
-                    $('#artist').text('for ' + perfData.performers[0].name)
-                    //var imgSrc = perfData.performers[0].image; //artist image that can be used for artist info/card if wanted
-                    //$('#artist-img').attr('src', imgSrc);
+                    $('#popup-modal').removeClass('hidden'); //modal for no upcoming shows
+                    $('#modal-msg').text('No upcoming shows found for ' + perfData.performers[0].name + ' Search another artist.');
                     return;
                 } else {
                     $('#artist').text('for ' + perfData.performers[0].name);
@@ -95,6 +91,7 @@ function getEventInfo(ID) {
         })
         .then(function (eventData) {
             console.log('EventData OK', eventData);  
+            $('#hide-table').removeClass('hidden');
             for(var i = 0; i < 5; i++) {
                 var block = i;
                 var artist = eventData.events[i].performers[0].name;
@@ -113,6 +110,7 @@ function getEventInfo(ID) {
         })
 }
 
+
 //uses amadeus api to pull hotels by latitude and longitude using location data from the getInfoID method and modifys text block to display hotel's name and distance from venue
  function getHotels(block, latitude, longitude, artist, eventTitle, venueName,venueCity,venueState,price,reformatDate,tUrl) {
     var tempKey = "";
@@ -130,7 +128,7 @@ function getEventInfo(ID) {
         .then(response => response.json())
         .then(response => {
             tempKey = response.access_token
-            const options1 = {method: 'GET', headers: {Authorization: 'Bearer '+ tempKey}};
+            const options1 = {method: 'GET', headers: {Authorization: 'Bearer '+ tempKey}}; 
             var eventUrl = "https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL";
             fetch(eventUrl,options1)
             .then(amadeus => amadeus.json())
@@ -153,15 +151,14 @@ function getEventInfo(ID) {
                         <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
                     </td>
                     <td class="py-4 px-6 text-indigo-900">
-                        <span class="text-m text-indigo-900" id="price">${price}</span>
+                        <span class="text-m text-indigo-900" id="price">$${price}</span>
                     </td>
                     <td class="py-4 px-6 text-indigo-900">
                         <span class="text-m text-indigo-900" id="hotelName">${hotel}</span> 
                     </td> 
                     <td class="py-4 px-6">
-                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
+                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 hover:underline">Get Tickets</a><br>
                     </td>
-                    
                 </tr>
                 `
                 results.innerHTML = resultsHTML;
@@ -177,7 +174,7 @@ function clearShows() {
     while (results.children.length > 1) {
         results.removeChild(results.lastChild);
     }
-    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotels').text('');
+    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotelName').text('');
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -185,3 +182,9 @@ function clearShows() {
 //---------------------------------------------------------------------------------------------------------------------
 searchBtn.addEventListener('click', checkArtist);
 recentBtn.addEventListener('click', recentSearch);
+
+//close modal popup
+$('.close-btn').click (function() {
+    $('#popup-modal').addClass('hidden');
+});
+
