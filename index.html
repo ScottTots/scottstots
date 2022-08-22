@@ -19,8 +19,8 @@
               <span class="font-semibold text-xl tracking-tight">concerteer</span>
             </div>
             <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">
-                    saved search
+                <a href="#" id="recent-Search" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-indigo-500 hover:bg-white mt-4 lg:mt-0">
+                    Last Search
                 </a>
             </div>
         </nav>
@@ -72,10 +72,7 @@
                             Ticket Price
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            Hotel Name
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                            Hotel Distance
+                            Nearest Hotel
                         </th>
                         <th scope="col" class="py-3 px-6">
                             Action
@@ -98,14 +95,13 @@
                         <td class="py-4 px-6 text-indigo-900">
                             <span class="text-m text-indigo-900" id="price"></span>
                         </td>
-                        <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
-                        </th>
                         <td class="py-4 px-6 text-indigo-900">
                             <span class="text-m text-indigo-900" id="hotelName"></span>
                         </td>
                         <td class="py-4 px-6">
-                            <span class="text-m text-indigo-900" id="hotelDistance"></span>
+                            <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a><br>
                         </td>
+                        </th>        
                     </tr>
                     <!--js-->
                 </tbody>
