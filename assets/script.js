@@ -44,7 +44,7 @@ function recentSearch() {
 //---------------------------------------------------------------------------------------------------------------------
 function getPerformerId(artist) {
     var perfUrl = 'https://api.seatgeek.com/2/performers?slug='+ artist +seatGKey;
-
+    
     fetch(perfUrl)
         .then(function (response) {
         if(!response.ok){  
@@ -57,7 +57,7 @@ function getPerformerId(artist) {
             console.log('PerfData OK', perfData);
             if(perfData.performers.length == 0) {  //if no array in performers then return
                 console.log('No artist or ID found');
-                $('##event-title').text('No artist found! Try searching another artist.')
+                $('#event-title').text('No artist found! Try searching another artist.')
                 return;
             } else {
                 var perfID = perfData.performers[0].id; // gets the performer ID
@@ -90,6 +90,7 @@ function getEventInfo(ID) {
         })
         .then(function (eventData) {
             console.log('EventData OK', eventData);  
+            $('.hidden').removeClass('hidden');
             for(var i = 0; i < 5; i++) {
                 var block = i;
                 var artist = eventData.events[i].performers[0].name;
@@ -127,7 +128,7 @@ function getEventInfo(ID) {
         .then(response => {
             tempKey = response.access_token
             const options1 = {method: 'GET', headers: {Authorization: 'Bearer '+ tempKey}}; 
-            var eventUrl = "https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=${i}&longitude=${i}" + longitude[i] + "&radius=5&radiusUnit=MILE&hotelSource=ALL";
+            var eventUrl = "https://api.amadeus.com/v1/reference-data/locations/hotels/by-geocode?latitude=" + latitude + "&longitude=" + longitude + "&radius=5&radiusUnit=MILE&hotelSource=ALL";
             fetch(eventUrl,options1)
             .then(amadeus => amadeus.json())
             .then(function (data) {
@@ -149,15 +150,14 @@ function getEventInfo(ID) {
                         <span class="text-m text-indigo-900" id="date">${reformatDate}</span>
                     </td>
                     <td class="py-4 px-6 text-indigo-900">
-                        <span class="text-m text-indigo-900" id="price">${price}</span>
+                        <span class="text-m text-indigo-900" id="price">$${price}</span>
                     </td>
                     <td class="py-4 px-6 text-indigo-900">
                         <span class="text-m text-indigo-900" id="hotelName">${hotel}</span> 
                     </td> 
                     <td class="py-4 px-6">
-                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Get Tickets</a><br>
+                        <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 hover:underline">Get Tickets</a><br>
                     </td>
-                    
                 </tr>
                 `
                 results.innerHTML = resultsHTML;
@@ -173,7 +173,7 @@ function clearShows() {
     while (results.children.length > 1) {
         results.removeChild(results.lastChild);
     }
-    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotelName').text('');$('#hotelDistance').text('');
+    $('#artist').text('');$('#event-title').text('');$('#venue-name').text(''); $('#venue-city').text(''); $('#venue-state').text(''); $('#date').text(''); $('#price').text(''); $('#ticket-url').text('');$('#hotelName').text('');
 }
 
 //---------------------------------------------------------------------------------------------------------------------

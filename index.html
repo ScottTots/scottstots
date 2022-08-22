@@ -27,7 +27,7 @@
 
     <!--Hero-->
         <hero class="p-32 text-center">
-            <h1 class="text-7xl font-bold mb-1 text-indigo-100">concerteer</h1>
+            <h1 class="text-7xl font-bold mb-1 text-indigo-50">concerteer</h1>
             <p class="font-medium text-indigo-900">Find upcoming shows for your favorite artists and hotels nearby</p>
         </hero>
 
@@ -54,7 +54,7 @@
         </div>
 
     <!--Search Result Table-->        
-        <div class="overflow-x-auto relative">
+        <div class="overflow-x-auto relative hidden">
             <h1 class="text-1xl text-indigo-100 font-semibold py-2 px-6">Up Coming Shows <span id="artist"></span></h1>
             <table class="w-full text-sm text-left text-indigo-500">
                 <thead class="text-xs text-indigo-700 uppercase bg-indigo-50">
@@ -80,29 +80,6 @@
                     </tr>
                 </thead>
                 <tbody class="results">
-                    <tr class="bg-indigo-100 border-b">
-                        <th scope="row" class="py-4 px-6 font-bold text-indigo-900 whitespace-nowrap">
-                            <span class="text-sm text-indigo-900" id="event-title"></span>
-                        </th>
-                        <td class="py-4 px-6 text-indigo-900">
-                            <span class="text-m text-indigo-900" id="venue-name"></span> <br>
-                            <span class="text-m text-indigo-900" id="venue-city"></span>
-                            <span class="text-m text-indigo-900" id="venue-state"></span>
-                        </td>
-                        <td class="py-4 px-6 text-indigo-900">
-                            <span class="text-m text-indigo-900" id="date"></span>
-                        </td>
-                        <td class="py-4 px-6 text-indigo-900 hotel-parent">
-                            <span class="text-m text-indigo-900" id="price"></span>
-                        </td>
-                        <td class="py-4 px-6 text-indigo-900">
-                            <span class="text-m text-indigo-900" id="hotelName"></span>
-                        </td>
-                        <td class="py-4 px-6">
-                            <a href="${tUrl}" target="_blank" id="ticket-url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a><br>
-                        </td>
-                        </th>        
-                    </tr>
                     <!--js-->
                 </tbody>
             </table>
