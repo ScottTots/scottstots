@@ -57,7 +57,8 @@ function getPerformerId(artist) {
             console.log('PerfData OK', perfData);
             if(perfData.performers.length == 0) {  //if no array in performers then return
                 console.log('No artist or ID found');
-                $('#event-title').text('No artist found! Try searching another artist.')
+                $('#popup-modal').removeClass('hidden'); //modal for no artist found
+                $('#modal-msg').text('No artist found! Try searching again.');
                 return;
             } else {
                 var perfID = perfData.performers[0].id; // gets the performer ID
@@ -65,8 +66,8 @@ function getPerformerId(artist) {
                 var hasEvents = perfData.performers[0].has_upcoming_events; 
                 if(hasEvents == false) { //checks if the artist has upcoming shows
                     console.log('No events');
-                    $('#event-title').text('No upcoming shows');
-                    $('#artist').text('for ' + perfData.performers[0].name)
+                    $('#popup-modal').removeClass('hidden'); //modal for no upcoming shows
+                    $('#modal-msg').text('No upcoming shows found for ' + perfData.performers[0].name + ' Search another artist.');
                     return;
                 } else {
                     $('#artist').text('for ' + perfData.performers[0].name);
@@ -90,7 +91,7 @@ function getEventInfo(ID) {
         })
         .then(function (eventData) {
             console.log('EventData OK', eventData);  
-            $('.hidden').removeClass('hidden');
+            $('#hide-table').removeClass('hidden');
             for(var i = 0; i < 5; i++) {
                 var block = i;
                 var artist = eventData.events[i].performers[0].name;
@@ -181,3 +182,9 @@ function clearShows() {
 //---------------------------------------------------------------------------------------------------------------------
 searchBtn.addEventListener('click', checkArtist);
 recentBtn.addEventListener('click', recentSearch);
+
+//close modal popup
+$('.close-btn').click (function() {
+    $('#popup-modal').addClass('hidden');
+});
+
