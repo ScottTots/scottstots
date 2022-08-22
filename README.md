@@ -10,9 +10,9 @@ In this project we will be building a responsive website that allows you to sear
 ## User Story
 ```
 As a music lover I am searching for my favorite artists upcoming shows. 
-I then want to see a song profile and see hotels in the city where the event is held.
-- A PERFORMER or an event of interest
-- ex: user enters “red hot” into the search bar
+I then want to see upcoming concerts and see which hotel is closest in the city where the event is held.
+I also want to be able to got back to my last search.
+- ex: user enters “bad bunny” into the search bar the table will update to display the date, location, ticket price, closest hotel, and a link to get tickets.
 
 ```
 ## Process
@@ -27,8 +27,9 @@ I then want to see a song profile and see hotels in the city where the event is 
 - use location info for 2nd API
 
 2nd API (AMADEUS) TAKES the VENUE address/city from 1st API
-- find hotels nearby
-- How to add the booking: https://developers.amadeus.com/blog/build-hotel-booking-engine-amadeus-api
+- find hotels nearby to the venue of the concert
+
+The code works down the two apis to fill information for an event then updates the html before beginning the process again up to 5 times.
 
 ## Wireframes
 
