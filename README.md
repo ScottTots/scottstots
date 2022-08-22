@@ -1,6 +1,7 @@
 # scottstots
 
 ## Project Title: Concerteer
+URL: https://scotttots.github.io/scottstots/
 
 ## Project Description
 
@@ -10,26 +11,43 @@ In this project we will be building a responsive website that allows you to sear
 ## User Story
 ```
 As a music lover I am searching for my favorite artists upcoming shows. 
+<<<<<<< readme-final
+I then want to see upcoming shows and see hotels in the city where the event is held.
+- A PERFORMER or an event of interest
+- ex: user enters “Bad Bunny” into the search bar
+=======
 I then want to see upcoming concerts and see which hotel is closest in the city where the event is held.
 I also want to be able to got back to my last search.
 - ex: user enters “bad bunny” into the search bar the table will update to display the date, location, ticket price, closest hotel, and a link to get tickets.
+>>>>>>> main
 
 ```
 ## Process
 
 1st API (SEATGEEK) gets
 - list of performers 
-- ex: GET https://api.seatgeek.com/2/performers?q=red+hot&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU
 - Use insomnia to generate the JS code
 - get the performer ID from the fetch request
 - use the performer ID to get their event info (venue name, address, city, zip, etc)
-- ex: GET https://api.seatgeek.com/2/events?performers.id=9052&client_id=Mjg0MDM3MzJ8MTY2MDI2NjExNi40MzgwNDU
 - use location info for 2nd API
 
+<<<<<<< readme-final
+2nd API (AMADEUS) TAKES the VENUE geolocation coordinates from 1st API
+- find hotels nearby
+- save recent searches using local storage
+- limited amount of results shown on page to 5
+=======
 2nd API (AMADEUS) TAKES the VENUE address/city from 1st API
 - find hotels nearby to the venue of the concert
 
 The code works down the two apis to fill information for an event then updates the html before beginning the process again up to 5 times.
+>>>>>>> main
+
+## Screenshots
+
+![Concerteer Bad Bunny Search](https://user-images.githubusercontent.com/30813052/185979379-b6085ad0-6c78-46a6-bcb7-c49a38766609.png)
+![Concerteer No input](https://user-images.githubusercontent.com/30813052/185979386-86d19788-df9c-4d08-bf06-4b654f572165.png)
+
 
 ## Wireframes
 
